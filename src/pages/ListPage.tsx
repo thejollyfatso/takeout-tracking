@@ -18,12 +18,6 @@ function applySort(list: Restaurant[], sort: SortKey): Restaurant[] {
       case 'travelTime':
         return (a.travelTimeMinutes ?? Infinity) - (b.travelTimeMinutes ?? Infinity);
       case 'frequency': return b.frequency - a.frequency;
-      case 'lastVisited': {
-        if (!a.lastVisited && !b.lastVisited) return 0;
-        if (!a.lastVisited) return -1;
-        if (!b.lastVisited) return 1;
-        return a.lastVisited.localeCompare(b.lastVisited);
-      }
       case 'createdAt': return b.createdAt.localeCompare(a.createdAt);
       default: return 0;
     }

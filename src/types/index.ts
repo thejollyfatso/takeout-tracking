@@ -30,7 +30,6 @@ export interface Restaurant {
   serviceType: 'dine-in' | 'takeout' | 'both';
   alcohol: 'none' | 'beer-wine' | 'full-bar';
   frequency: 1 | 2 | 3 | 4 | 5;
-  lastVisited: string | null;
   hours: WeeklyHours;
   frequentlyOrdered: OrderItem[];
   notes: string;
@@ -45,7 +44,7 @@ export interface AppMeta {
   schemaVersion: number;
 }
 
-export type SortKey = 'name' | 'distance' | 'travelTime' | 'frequency' | 'lastVisited' | 'createdAt';
+export type SortKey = 'name' | 'distance' | 'travelTime' | 'frequency' | 'createdAt';
 
 export interface Filters {
   cuisine: string[];

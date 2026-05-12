@@ -5,8 +5,7 @@ const OPTIONS: { value: SortKey; label: string }[] = [
   { value: 'distance', label: 'Distance (nearest)' },
   { value: 'travelTime', label: 'Travel time (fastest)' },
   { value: 'frequency', label: 'Frequency (most)' },
-  { value: 'lastVisited', label: 'Last visited (longest ago)' },
-  { value: 'createdAt', label: 'Recently added' },
+{ value: 'createdAt', label: 'Recently added' },
 ];
 
 interface Props {

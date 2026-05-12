@@ -88,7 +88,6 @@ export function DetailPage() {
         <div><span className="text-gray-500">Formality</span><div className="font-medium">{r.formality} — {FORMALITY_LABEL[r.formality]}</div></div>
         <div><span className="text-gray-500">Service</span><div className="font-medium">{SERVICE_LABEL[r.serviceType]}</div></div>
         <div><span className="text-gray-500">Alcohol</span><div className="font-medium">{ALCOHOL_LABEL[r.alcohol]}</div></div>
-        {r.lastVisited && <div><span className="text-gray-500">Last visited</span><div className="font-medium">{r.lastVisited}</div></div>}
       </div>
 
       {r.tags.length > 0 && (

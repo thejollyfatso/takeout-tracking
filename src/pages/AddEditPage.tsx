@@ -24,7 +24,7 @@ function emptyForm(): Omit<Restaurant, 'id' | 'createdAt' | 'updatedAt'> {
     serviceType: 'both',
     alcohol: 'none',
     frequency: 3,
-    lastVisited: null,
+
     hours: defaultWeeklyHours(),
     frequentlyOrdered: [],
     notes: '',
@@ -290,13 +290,6 @@ export function AddEditPage() {
           <label className={labelClass}>Frequency (how often you visit)</label>
           <ScaleInput value={form.frequency} onChange={v => update('frequency', v as 1|2|3|4|5)}
             lowLabel="Rarely" highLabel="Often" name="Frequency" />
-        </div>
-
-        <div>
-          <label className={labelClass}>Last Visited</label>
-          <input type="date" value={form.lastVisited ?? ''}
-            onChange={e => update('lastVisited', e.target.value || null)}
-            className={fieldClass} />
         </div>
 
         <div>
