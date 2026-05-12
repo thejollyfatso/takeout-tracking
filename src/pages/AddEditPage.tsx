@@ -18,18 +18,64 @@ function emptyForm(): Omit<Restaurant, 'id' | 'createdAt' | 'updatedAt'> {
   return {
     name: '',
     cuisine: [],
-    distanceMiles: 0,
+    distanceMiles: null,
+    travelTimeMinutes: null,
     formality: 3,
     serviceType: 'both',
     alcohol: 'none',
     frequency: 3,
-    rating: 3,
     lastVisited: null,
     hours: defaultWeeklyHours(),
     frequentlyOrdered: [],
     notes: '',
     tags: [],
   };
+}
+
+interface DistanceInputProps {
+  distanceMiles: number | null;
+  travelTimeMinutes: number | null;
+  onChangeMiles: (v: number | null) => void;
+  onChangeMinutes: (v: number | null) => void;
+  fieldClass: string;
+  labelClass: string;
+}
+
+function DistanceInput({ distanceMiles, travelTimeMinutes, onChangeMiles, onChangeMinutes, fieldClass, labelClass }: DistanceInputProps) {
+  const [mode, setMode] = useState<'miles' | 'minutes'>(
+    travelTimeMinutes != null && distanceMiles == null ? 'minutes' : 'miles'
+  );
+
+  return (
+    <div>
+      <div className="flex items-center gap-2 mb-1">
+        <span className={labelClass.replace('mb-1', '')}>Distance</span>
+        <div className="flex rounded overflow-hidden border border-gray-300 ml-1">
+          <button type="button" onClick={() => setMode('miles')}
+            className={`px-2 py-0.5 text-xs font-medium transition-colors ${mode === 'miles' ? 'bg-orange-500 text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}>
+            mi
+          </button>
+          <button type="button" onClick={() => setMode('minutes')}
+            className={`px-2 py-0.5 text-xs font-medium transition-colors border-l border-gray-300 ${mode === 'minutes' ? 'bg-orange-500 text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}>
+            min
+          </button>
+        </div>
+      </div>
+      {mode === 'miles' ? (
+        <input type="number" min={0} step={0.1}
+          value={distanceMiles ?? ''}
+          placeholder="e.g. 1.5"
+          onChange={e => onChangeMiles(e.target.value ? Number(e.target.value) : null)}
+          className={fieldClass} />
+      ) : (
+        <input type="number" min={0} step={1}
+          value={travelTimeMinutes ?? ''}
+          placeholder="e.g. 20"
+          onChange={e => onChangeMinutes(e.target.value ? Number(e.target.value) : null)}
+          className={fieldClass} />
+      )}
+    </div>
+  );
 }
 
 interface CuisineSelectProps {
@@ -198,13 +244,14 @@ export function AddEditPage() {
             />
           </div>
 
-          <div>
-            <label className={labelClass}>Distance (miles)</label>
-            <input type="number" min={0} step={0.1}
-              value={form.distanceMiles}
-              onChange={e => update('distanceMiles', Number(e.target.value))}
-              className={fieldClass} />
-          </div>
+          <DistanceInput
+            distanceMiles={form.distanceMiles}
+            travelTimeMinutes={form.travelTimeMinutes}
+            onChangeMiles={v => update('distanceMiles', v)}
+            onChangeMinutes={v => update('travelTimeMinutes', v)}
+            fieldClass={fieldClass}
+            labelClass={labelClass}
+          />
         </div>
 
         <fieldset>
@@ -237,12 +284,6 @@ export function AddEditPage() {
           <label className={labelClass}>Formality</label>
           <ScaleInput value={form.formality} onChange={v => update('formality', v as 1|2|3|4|5)}
             lowLabel="Casual" highLabel="Fine dining" name="Formality" />
-        </div>
-
-        <div>
-          <label className={labelClass}>Rating</label>
-          <ScaleInput value={form.rating} onChange={v => update('rating', v as 1|2|3|4|5)}
-            lowLabel="Poor" highLabel="Excellent" name="Rating" />
         </div>
 
         <div>

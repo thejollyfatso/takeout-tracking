@@ -1,21 +1,19 @@
 import { Link } from 'react-router-dom';
 import type { Restaurant } from '../../types';
 
-const STARS = [1, 2, 3, 4, 5];
-
-function Stars({ value }: { value: number }) {
-  return (
-    <span className="text-orange-400 text-sm">
-      {STARS.map(s => s <= value ? '★' : '☆').join('')}
-    </span>
-  );
-}
-
 const SERVICE_LABEL: Record<string, string> = {
   'dine-in': 'Dine-in',
   'takeout': 'Takeout',
   'both': 'Dine-in & Takeout',
 };
+
+function DistanceBadge({ r }: { r: Restaurant }) {
+  const parts: string[] = [];
+  if (r.distanceMiles != null) parts.push(`${r.distanceMiles} mi`);
+  if (r.travelTimeMinutes != null) parts.push(`${r.travelTimeMinutes} min`);
+  if (!parts.length) return null;
+  return <span>{parts.join(' · ')}</span>;
+}
 
 interface Props {
   restaurant: Restaurant;
@@ -36,8 +34,7 @@ export function RestaurantCard({ restaurant: r, layout }: Props) {
           </div>
         </div>
         <div className="text-right shrink-0 space-y-0.5">
-          <div><Stars value={r.rating} /></div>
-          <p className="text-xs text-gray-500">{r.distanceMiles} mi · {SERVICE_LABEL[r.serviceType]}</p>
+          <p className="text-xs text-gray-500"><DistanceBadge r={r} /> · {SERVICE_LABEL[r.serviceType]}</p>
         </div>
       </Link>
     );
@@ -53,10 +50,7 @@ export function RestaurantCard({ restaurant: r, layout }: Props) {
             <span key={c} className="text-xs bg-orange-50 text-orange-700 px-1.5 py-0.5 rounded">{c}</span>
           ))}
         </div>
-        <div className="flex items-center justify-between text-sm text-gray-500">
-          <Stars value={r.rating} />
-          <span>{r.distanceMiles} mi</span>
-        </div>
+        <p className="text-sm text-gray-500"><DistanceBadge r={r} /></p>
         <p className="text-xs text-gray-400 mt-1">{SERVICE_LABEL[r.serviceType]}</p>
         {r.tags.length > 0 && (
           <div className="flex flex-wrap gap-1 mt-2">

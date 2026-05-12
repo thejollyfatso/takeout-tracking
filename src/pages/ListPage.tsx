@@ -13,8 +13,10 @@ function applySort(list: Restaurant[], sort: SortKey): Restaurant[] {
   return [...list].sort((a, b) => {
     switch (sort) {
       case 'name': return a.name.localeCompare(b.name);
-      case 'distance': return a.distanceMiles - b.distanceMiles;
-      case 'rating': return b.rating - a.rating;
+      case 'distance':
+        return (a.distanceMiles ?? Infinity) - (b.distanceMiles ?? Infinity);
+      case 'travelTime':
+        return (a.travelTimeMinutes ?? Infinity) - (b.travelTimeMinutes ?? Infinity);
       case 'frequency': return b.frequency - a.frequency;
       case 'lastVisited': {
         if (!a.lastVisited && !b.lastVisited) return 0;
@@ -41,7 +43,7 @@ export function ListPage() {
     if (filters.serviceType.length) list = list.filter(r => filters.serviceType.includes(r.serviceType));
     if (filters.alcohol.length) list = list.filter(r => filters.alcohol.includes(r.alcohol));
     list = list.filter(r => r.formality >= filters.formalityMin && r.formality <= filters.formalityMax);
-    if (filters.distanceMax != null) list = list.filter(r => r.distanceMiles <= filters.distanceMax!);
+    if (filters.distanceMax != null) list = list.filter(r => r.distanceMiles != null && r.distanceMiles <= filters.distanceMax!);
     if (filters.tags.length) list = list.filter(r => filters.tags.every(t => r.tags.includes(t)));
     if (filters.openNow) list = list.filter(r => isOpenNow(r.hours));
 

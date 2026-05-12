@@ -24,12 +24,12 @@ export interface Restaurant {
   id: string;
   name: string;
   cuisine: string[];
-  distanceMiles: number;
+  distanceMiles: number | null;
+  travelTimeMinutes: number | null;
   formality: 1 | 2 | 3 | 4 | 5;
   serviceType: 'dine-in' | 'takeout' | 'both';
   alcohol: 'none' | 'beer-wine' | 'full-bar';
   frequency: 1 | 2 | 3 | 4 | 5;
-  rating: 1 | 2 | 3 | 4 | 5;
   lastVisited: string | null;
   hours: WeeklyHours;
   frequentlyOrdered: OrderItem[];
@@ -45,7 +45,7 @@ export interface AppMeta {
   schemaVersion: number;
 }
 
-export type SortKey = 'name' | 'distance' | 'rating' | 'frequency' | 'lastVisited' | 'createdAt';
+export type SortKey = 'name' | 'distance' | 'travelTime' | 'frequency' | 'lastVisited' | 'createdAt';
 
 export interface Filters {
   cuisine: string[];

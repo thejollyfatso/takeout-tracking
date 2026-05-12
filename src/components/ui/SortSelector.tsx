@@ -3,7 +3,7 @@ import type { SortKey } from '../../types';
 const OPTIONS: { value: SortKey; label: string }[] = [
   { value: 'name', label: 'Name (A–Z)' },
   { value: 'distance', label: 'Distance (nearest)' },
-  { value: 'rating', label: 'Rating (highest)' },
+  { value: 'travelTime', label: 'Travel time (fastest)' },
   { value: 'frequency', label: 'Frequency (most)' },
   { value: 'lastVisited', label: 'Last visited (longest ago)' },
   { value: 'createdAt', label: 'Recently added' },

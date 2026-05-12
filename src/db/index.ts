@@ -11,6 +11,10 @@ export class EatsDB extends Dexie {
       restaurants: 'id, name, distanceMiles, rating, frequency, lastVisited, createdAt',
       meta: 'id',
     });
+    this.version(2).stores({
+      restaurants: 'id, name, distanceMiles, frequency, lastVisited, createdAt',
+      meta: 'id',
+    });
   }
 }
 

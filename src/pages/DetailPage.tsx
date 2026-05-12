@@ -21,11 +21,6 @@ function fmt12(time: string | null): string {
   return `${h12}:${String(m).padStart(2, '0')} ${ampm}`;
 }
 
-const STARS = [1, 2, 3, 4, 5];
-function Stars({ value }: { value: number }) {
-  return <span className="text-orange-400">{STARS.map(s => s <= value ? '★' : '☆').join('')}</span>;
-}
-
 const ALCOHOL_LABEL: Record<string, string> = { none: 'None', 'beer-wine': 'Beer & Wine', 'full-bar': 'Full Bar' };
 const SERVICE_LABEL: Record<string, string> = { 'dine-in': 'Dine-in', takeout: 'Takeout', both: 'Dine-in & Takeout' };
 const FORMALITY_LABEL: Record<number, string> = { 1: 'Very casual', 2: 'Casual', 3: 'Moderate', 4: 'Upscale', 5: 'Fine dining' };
@@ -87,9 +82,9 @@ export function DetailPage() {
       </div>
 
       <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
-        <div><span className="text-gray-500">Rating</span><div><Stars value={r.rating} /></div></div>
-        <div><span className="text-gray-500">Frequency</span><div><Stars value={r.frequency} /></div></div>
-        <div><span className="text-gray-500">Distance</span><div className="font-medium">{r.distanceMiles} miles</div></div>
+        <div><span className="text-gray-500">Frequency</span><div className="font-medium">{r.frequency}/5</div></div>
+        {r.distanceMiles != null && <div><span className="text-gray-500">Distance</span><div className="font-medium">{r.distanceMiles} miles</div></div>}
+        {r.travelTimeMinutes != null && <div><span className="text-gray-500">Travel time</span><div className="font-medium">{r.travelTimeMinutes} min</div></div>}
         <div><span className="text-gray-500">Formality</span><div className="font-medium">{r.formality} — {FORMALITY_LABEL[r.formality]}</div></div>
         <div><span className="text-gray-500">Service</span><div className="font-medium">{SERVICE_LABEL[r.serviceType]}</div></div>
         <div><span className="text-gray-500">Alcohol</span><div className="font-medium">{ALCOHOL_LABEL[r.alcohol]}</div></div>
